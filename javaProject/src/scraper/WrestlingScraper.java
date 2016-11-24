@@ -681,6 +681,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 					if(field_name.equals("current_name"))
 					{
 						//name= NS + "#"+ value;
+						title = makeIndividual(name, link, "Title");
 						title= m.createIndividual(create_uri(name, link), m.getOntClass(NS +"#Title"));
 //						System.out.println(title.toString());
 						title.addProperty(m.getProperty(NS + "#hasName"), value);
@@ -691,9 +692,10 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 						{
 						case "status":
 							if(value.toLowerCase().equals("active"))
-								title.addProperty(m.getProperty(NS+ "#isActive"), "true");
+								
+								title.addProperty(m.getProperty(NS+ "#isActive"), m.createTypedLiteral(true));
 							else
-								title.addProperty(m.getProperty(NS+ "#isActive"), "false");
+								title.addProperty(m.getProperty(NS+ "#isActive"), m.createTypedLiteral(true));
 							break;
 						case "promotions":
 							tk= new StringTokenizer(value,"()");
@@ -928,7 +930,14 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 			Pattern pattern = Pattern.compile("\\(([0-9])+:([0-9])+\\)");
 			java.util.regex.Matcher matche = pattern.matcher(matchResults);
 			if (matche.find()) { 
-				resMatch.addProperty(m.getProperty(NS + "#hasDuration"), matche.group(0)); 
+				String mins = matche.group(0).replaceAll("\\(|\\)|[A-Z]|[a-z]", "").split(":")[0]; 
+				String secs = matche.group(0).replaceAll("\\(|\\)|[A-Z]|[a-z]", "").split(":")[1]; 
+				try {
+					Literal l = m.createTypedLiteral(Integer.parseInt(mins) * 60 + Integer.parseInt(secs));
+					resMatch.addProperty(m.getProperty(NS + "#hasDuration"), l); 
+				} catch (Exception e) {
+					//do nothing
+				}
 			}
 			matchResults = matchResults.replaceAll("\\(([0-9])+:([0-9])+\\)", "");
 //			System.out.println("{  " + matchResults + "  }");
