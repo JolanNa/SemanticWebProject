@@ -172,6 +172,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasTitleReign -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasTitleReign">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasTrainer -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasTrainer">
@@ -179,6 +188,15 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Wrestler"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasVacancy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasVacancy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleVacancy"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
     </owl:ObjectProperty>
     
 
@@ -257,6 +275,15 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isTrainer -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isTrainer"/>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#wonTitleReign -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#wonTitleReign">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+    </owl:ObjectProperty>
     
 
 
@@ -409,6 +436,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasEndDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasEndDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleTerm"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasGender -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasGender">
@@ -471,6 +507,15 @@
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasSportsBackground">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasStartingDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasStartingDate">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleTerm"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
     </owl:DatatypeProperty>
     
 
@@ -643,9 +688,25 @@
     
 
 
-    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title_reign -->
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title_reign"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleTerm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleTerm -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleTerm"/>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleVacancy -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleVacancy">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleTerm"/>
+    </owl:Class>
     
 
 

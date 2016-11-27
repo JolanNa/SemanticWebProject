@@ -7,7 +7,7 @@
 //
 // - labels
 // - make all dates real dates not strings
-// - 
+// - makeNamedIndividual() {
 //
 /////////////////////////////////////////////////
 
@@ -15,6 +15,7 @@ package scraper;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.jena.ontology.Individual;
+import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntDocumentManager;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.Literal;
@@ -31,6 +32,7 @@ import progressSaver.ProgressSaver;
 import res.Matcher;
 import res.MatcherEvents;
 import res.MatcherPromotions;
+import res.MatcherTitles;
 import res.MatcherWorkers;
 
 import java.io.*;
@@ -38,6 +40,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 
@@ -49,7 +52,7 @@ import java.util.regex.Pattern;
  * The Scraper doesn't have to fetch all the data at once, but can pick up at a point until where the db is filled. (very basic)
  */
 public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
-	/*CHANGE THE PATH JOLAN!!!*/ private static String ontfile= "/Users/Jolan/Documents/learn/eclipse/workspace/LastOne/wrestling.rdf";
+	/*CHANGE THE PATH JOLAN!!!*/ private static String ontfile= "/Users/Jolan/git/SemanticWebProject/javaProject/wrestling.rdf";
 	private static HtmlToPlainText htmlPlain; // to convert html to plain text which can be added to the db
 	//http://www.semanticweb.org/vasco/ontologies/2016/9/wrestling
     private static final String NS= "http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5";
@@ -116,17 +119,17 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 		   	   put("appendix", "&s=");
 		   	   put("appendix_element", ""); // appendix during crawling of single elements
 		    }});
-		   add(new HashMap<String, Object>() {{
-		   	   put("matcher", new MatcherEvents());
-		   	   put("name", "Event");
-		   	   put("raw_link", "http://www.cagematch.net/?id=1&view=results");
-		   	   put("nr_elements", new Integer(100));
-		   	   put("step_size", new Integer(100));
-		   	   put("appendix", "&s="); // appendix during link extraction
-		   	   put("appendix_element", ""); // appendix during crawling of single elements
-		   	   put("columnPromotion", 2); // appendix during crawling of single elements
-		   	   put("column_link", 2); // appendix during crawling of single elements
-			}});
+//		   add(new HashMap<String, Object>() {{
+//		   	   put("matcher", new MatcherEvents());
+//		   	   put("name", "Event");
+//		   	   put("raw_link", "http://www.cagematch.net/?id=1&view=results");
+//		   	   put("nr_elements", new Integer(100));
+//		   	   put("step_size", new Integer(100));
+//		   	   put("appendix", "&s="); // appendix during link extraction
+//		   	   put("appendix_element", ""); // appendix during crawling of single elements
+//		   	   put("columnPromotion", 2); // appendix during crawling of single elements
+//		   	   put("column_link", 2); // appendix during crawling of single elements
+//			}});
 //		   add(new HashMap<String, Object>() {{
 //		   	   put("matcher", new MatcherStables());
 //		   	   put("name", "Stable");
@@ -138,17 +141,17 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 //		   	   put("columnPromotion", 0); // appendix during crawling of single elements
 //		   	   put("column_link", 1); // appendix during crawling of single elements
 //			}});
-//		   add(new HashMap<String, Object>() {{
-//			put("matcher", new MatcherTitles());
-//			put("name", "Title");
-//			put("raw_link", "http://www.cagematch.net/?id=5&view=titles");
-//			put("nr_elements", new Integer(4000));
-//			put("step_size", new Integer(100));
-//			put("appendix", "&s=");
-//			put("appendix_element", ""); // appendix during crawling of single elements
-//		   	put("columnPromotion", 3); // appendix during crawling of single elements
-//		   	put("column_link", 2); // appendix during crawling of single elements
-//			}});
+		   add(new HashMap<String, Object>() {{
+			put("matcher", new MatcherTitles());
+			put("name", "Title");
+			put("raw_link", "http://www.cagematch.net/?id=5&view=titles");
+			put("nr_elements", new Integer(900));
+			put("step_size", new Integer(100));
+			put("appendix", "&s=");
+			put("appendix_element", ""); // appendix during crawling of single elements
+		   	put("columnPromotion", 3); // appendix during crawling of single elements
+		   	put("column_link", 2); // appendix during crawling of single elements
+			}});
 //		   add(new HashMap<String, Object>() {{
 //				put("matcher", new MatcherTeams());
 //				put("name", "TagTeam");
@@ -160,17 +163,17 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 //			   	put("columnPromotion", 0); // appendix during crawling of single elements
 //		        put("column_link", 1); // appendix during crawling of single elements
 //			}});
-		   add(new HashMap<String, Object>() {{
-		   	   put("matcher", new MatcherWorkers());
-		   	   put("name", "Worker");
-		   	   put("raw_link", "http://www.cagematch.net/?id=2&view=workers");
-		   	   put("nr_elements", new Integer(400));
-		   	   put("step_size", new Integer(100));
-		   	   put("appendix", "&s=");
-		   	   put("appendix_element", ""); // appendix during crawling of single elements
-		   	   put("columnPromotion", 6); // appendix during crawling of single elements
-		   	   put("column_link", 2); // appendix during crawling of single elements
-			}});
+//		   add(new HashMap<String, Object>() {{
+//		   	   put("matcher", new MatcherWorkers());
+//		   	   put("name", "Worker");
+//		   	   put("raw_link", "http://www.cagematch.net/?id=2&view=workers");
+//		   	   put("nr_elements", new Integer(400));
+//		   	   put("step_size", new Integer(100));
+//		   	   put("appendix", "&s=");
+//		   	   put("appendix_element", ""); // appendix during crawling of single elements
+//		   	   put("columnPromotion", 6); // appendix during crawling of single elements
+//		   	   put("column_link", 2); // appendix during crawling of single elements
+//			}});
 		   
 		}};
 		
@@ -181,15 +184,33 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 		dm.addAltEntry( "http://www.semanticweb.org/vasco/ontologies/2016/9/wrestling",
                 "file:" + ontfile );
 		m.read("http://www.semanticweb.org/vasco/ontologies/2016/9/wrestling");
-
-//        extractEvents() {
-//            List <String> links = getLinksFromMultiSiteTable("http://www.cagematch.net/?id=1&view=results", "&s", 0, 100, 100, 2, 2);
-//            for(link: links) {
-//
-//            }
-//        }
-
+//		
+//		OntClass buddy= m.getOntClass(NS + "#Person");
+//		if(buddy == null) {
+//			System.out.println("SKAJDS:");
+//		}
 		
+//		String text= "SOMe random name 21.12.2014 - 22.10.2018";
+//		Pattern pattern = Pattern.compile("\\d{2}\\.\\d{2}\\.\\d{4}");
+//		java.util.regex.Matcher matche = pattern.matcher(text);
+//		if(matche.find()) { 
+//			System.out.println(matche.group(0));
+//		}
+//		if(matche.find()) {
+//
+//			System.out.println(matche.group(0));
+//		}
+		
+		System.out.println("Kintaro Oki & Michiaki Yoshimura (3)".replaceAll("\\([0-9]+\\)", ""));
+//		
+//		
+//		
+//		try {
+//			TimeUnit.SECONDS.sleep(100);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		for(HashMap<String, Object> specs : data_specs) {
 			// Data has to be crawled. But if there already is some, start there!
@@ -483,8 +504,8 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
                             // TODO add a real place
 							break;
 						case "arena":
-							Resource venue = m.createResource(create_uri(value,""), m.getOntClass(NS+"#Venue"));
-							event.addProperty(m.getProperty(NS + "#hasVenue"), venue);
+							ind = makeIndividual(value, "", "Venue");
+							event.addProperty(m.getProperty(NS + "#hasVenue"), ind);
 							break;
 						case "attendance":
 							String attendanceString = value.replaceAll("\\.|ca|fans|Fans|\\b|[a-z]|[A-Z]|,", "").trim();
@@ -704,7 +725,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 								token=tk.nextToken();
 								token=token.trim();
 								if(m.getIndividual(NS+"#"+token)!=null)
-									title.addProperty(m.getProperty(NS + "#hasPromotion"), m.getIndividual(create_uri(token, links_for_id)));
+									m.getIndividual(NS + "#" + token).addProperty(m.getProperty(NS + "#hasTitle"), title);
 //								else
 //								{
 //									Individual putmedownplease= m.createIndividual(NS+"#"+token.replaceAll("%","percent"),m.getOntClass(NS+ "#Promotion"));
@@ -768,18 +789,35 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 //			
 		}//if (entityExtracted == 1) {
 		
-		//Now extract all title if title
+		//Now extract a title if title
 		if(entityExtracted==3)
-		{
+		{	
 			Elements holders= document.getElementsByClass("TRow");
-
+			int counter = holders.size();
 			for(Element row : holders)
 			{
+				counter--;
 				String[] members=null;
 				String text= row.getElementsByClass("TextBold").text();
 				Elements links_for_id = row.select("a[herf]");
 				text = text.replaceAll("\\[([0-9])+\\]", "");
-//				System.out.println(text);
+				text = text.replaceAll("\\([0-9]+\\)", "");
+				team = null;
+				Individual teamMember = null;
+				Individual reign = makeIndividual(name + " - " + counter, "", "TitleTerm");
+				//get the dates:
+				Pattern pattern = Pattern.compile("\\d{2}\\.\\d{2}\\.\\d{4}");
+				java.util.regex.Matcher matche = pattern.matcher(row.text());
+				Literal l;
+				if (matche.find()) { 
+					l = create_date_literal(matche.group(0), m);
+					reign.addProperty(m.getProperty(NS + "#hasStartingDate"), l);
+				}
+				if (matche.find()) { 
+					l = create_date_literal(matche.group(0), m);
+					reign.addProperty(m.getProperty(NS + "#hasEndDate"), l);
+				}
+				
 				String teamName = "";
 				if(text.contains("&")) {
 					String innerBrackets = text;
@@ -789,83 +827,39 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 					} 
 					members = innerBrackets.split(" & |, ");
 					
+				} 
+				else {
+					members = text.split(" & |, ");
 				}
-				if(members!=null)
-				{
-//					System.out.println("Team Name: "+teamName);
-					if(teamName!="" && m.getIndividual(create_uri(teamName, links_for_id))==null)
-					{
-						team= m.createIndividual(create_uri(teamName, links_for_id), m.getOntClass(NS +"#Team"));
-						
-						team.addProperty(m.getProperty(NS + "#hasName"), teamName);
-					}
-					else if(m.getIndividual(create_uri(teamName, links_for_id))!=null)
-						team= m.getIndividual(create_uri(teamName, links_for_id));
-					for(String me: members) {
-
-//						System.out.println(me);
-						
-						if(m.getIndividual(create_uri(me, links_for_id))!=null)
-						{
-							
-							m.getIndividual(create_uri(me, links_for_id)).addProperty(m.getProperty(NS+"#hasTitle"), title);
-							if(m.getIndividual(create_uri(me, links_for_id))!=null)
-								team.addProperty(m.getProperty(NS+"#hasPerson"), m.getIndividual(create_uri(me, links_for_id)));
+				
+				if(!teamName.equals("")) {
+					team = makeIndividual(teamName, links_for_id, "Team");
+				}
+				if(members!=null) {
+					for(String me:members) {
+						if(me.equals("")) continue;
+						me = me.split("\\(")[0];
+						// in case the title was vacant for a time. We want to add a vacancy
+						if(me.equals("VAKANT")) {
+							reign.setOntClass(m.getOntClass(NS + "#TitleVacancy"));
+							title.addProperty(m.getProperty(NS + "#hasVacancy"), reign);
+						} else {
+							OntClass buddy= m.getOntClass(NS + "#Person");
+							if(buddy == null) {
+								System.out.println("SKAJDS:");
+							}
+							reign.setOntClass(m.getOntClass(NS + "#TitleReign"));
+							title.addProperty(m.getProperty(NS + "#hasTitleReign"), reign);
+							teamMember = makeIndividual(me, links_for_id, "Wrestler");
+							teamMember.addProperty(m.getProperty(NS + "#wonTitleReign"), reign);
 						}
-						else
-						{
-
-							Individual noob= m.createIndividual(create_uri(me, links_for_id), m.getOntClass(NS +"#Wrestler"));
-							noob.addProperty(m.getProperty(NS + "#hasName"), me);
-							noob.addProperty(m.getProperty(NS+"#hasTitle"), title);
-							if(teamName!="")
-								team.addProperty(m.getProperty(NS+"#hasPerson"), noob);
-
-						}
-						
+						if (team != null)
+							team.addProperty(m.getProperty(NS + "#hasPerson"), teamMember);
+					}
+					if(team!=null) {
+						team.addProperty(m.getProperty(NS + "#wonTitleReign"), reign);
 					}
 				}
-				else
-				{
-					StringTokenizer goaway= new StringTokenizer(text, "(");
-					text= goaway.nextToken();
-					if(m.getIndividual(create_uri(text, links_for_id))!=null)
-					{
-						m.getIndividual(create_uri(text, links_for_id)).addProperty(m.getProperty(NS+"#hasTitle"), title);
-					}
-					else
-					{
-
-						Individual noob= m.createIndividual(create_uri(text, links_for_id), m.getOntClass(NS +"#Wrestler"));
-						noob.addProperty(m.getProperty(NS + "#hasName"), text);
-						noob.addProperty(m.getProperty(NS+"#hasTitle"), title);
-					
-					}
-				}
-/*				String aargh= row.getElementsByClass("TextBold").text();
-				StringTokenizer goaway= new StringTokenizer(aargh, "&(");
-				if(aargh.indexOf('(')==-1) // and some will have a stupid team name too..
-					goaway.nextToken(); // which we have to get rid of
-				while(goaway.hasMoreTokens())
-					{
-						
-					
-					String actualname= goaway.nextToken();
-					if(m.getIndividual(NS+"#"+actualname)!=null)
-					{
-						m.getIndividual(NS+"#"+actualname).addProperty(m.getProperty(NS+"#hasTitle"), title);
-					}
-					else
-					{
-						Individual noob= m.createIndividual(NS + "#"+ actualname.replaceAll("%","percent"), m.getOntClass(NS +"#Wrestler"));
-						noob.addProperty(m.getProperty(NS + "#hasName"), actualname);
-						noob.addProperty(m.getProperty(NS+"#hasTitle"), title);
-					
-					}
-				}*/
-					
-
-					
 			}
 		}
 		// extract team members for team instances
@@ -1008,8 +1002,8 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 			card.addProperty(m.getProperty(NS+"#hasMatch"), resMatch);
 		} // for(Element match : matches) {
 
-		m.createResource(create_uri(name, link)).addProperty(m.getProperty(NS+"#hasCard"), card);
-		
+//		m.createResource(create_uri(name, link)).addProperty(m.getProperty(NS+"#hasCard"), card);
+		makeIndividual(name, link, "").addProperty(m.getProperty(NS + "#hasCard"), card);
 	} // create_matches
 
 	/**
@@ -1087,24 +1081,24 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 	 * @return
 	 */
 	private static Individual makeIndividual(String name, String link, String ontClass) {
-        Individual i = m.getIndividual(create_uri(name, link));
+        Individual i = m.getIndividual(create_uri(name.trim(), link));
         if(i != null) return i;
-        i = m.createIndividual(create_uri(name, link), m.getOntClass(NS+"#"+ontClass));
-        i.addProperty(RDFS.label, m.createLiteral(name.trim(), "en"));
+        i = m.createIndividual(create_uri(name.trim(), link), m.getOntClass(NS+"#"+ontClass));
+//        i.addProperty(RDFS.label, m.createLiteral(name.trim(), "en"));
         return i;
 	}
 	private static Individual makeIndividual(String name, Element link, String ontClass) {
-        Individual i = m.getIndividual(create_uri(name, link));
+        Individual i = m.getIndividual(create_uri(name.trim(), link));
         if(i != null) return i;
-        i = m.createIndividual(create_uri(name, link), m.getOntClass(NS+"#"+ontClass));
-        i.addProperty(RDFS.label, m.createLiteral(name.trim(), "en"));
+        i = m.createIndividual(create_uri(name.trim(), link), m.getOntClass(NS+"#"+ontClass));
+//        i.addProperty(RDFS.label, m.createLiteral(name.trim(), "en"));
         return i;
 	}
 	private static Individual makeIndividual(String name, Elements links_for_id, String ontClass) {
-        Individual i = m.getIndividual(create_uri(name, links_for_id));
+        Individual i = m.getIndividual(create_uri(name.trim(), links_for_id));
         if(i != null) return i;
-        i = m.createIndividual(create_uri(name, links_for_id), m.getOntClass(NS+"#"+ontClass));
-        i.addProperty(RDFS.label, m.createLiteral(name.trim(), "en"));
+        i = m.createIndividual(create_uri(name.trim(), links_for_id), m.getOntClass(NS+"#"+ontClass));
+//        i.addProperty(RDFS.label, m.createLiteral(name.trim(), "en"));
         return i;
 	}
 	
@@ -1114,7 +1108,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
         String savePath = "testen.rdf";
         try {
             out = new FileOutputStream(savePath);
-            m.write( out, "RDF/XML-ABBREV" );
+            m.write( out, "Turtle" );
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
