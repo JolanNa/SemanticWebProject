@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>Testing Sparql</title>
+    <style>
+      body, html {
+        margin:0;
+        padding: 0;
+      }
+      .content {
+        position: relative;
+        background-color: #f2f2f2;
+        border-left: 1px solid lightgrey;
+        border-right: 1px solid lightgrey;
+        width: 80%;
+        padding-bottom: 35px;
+        margin: auto;
+      }
+      .searchFormContainer {
+        position: relative;
+        margin: auto;
+        width: 484px;
+        /*background-color: red;*/
+        top: 50px;
+      }
+      #searchSubmit {
+        padding: 0;
+        /*border: none;*/
+        background-color: lightgrey;
+        width: 80px;
+        height: 35px;
+        margin-top: 10px;
+        margin: auto;
+      }
+      #searchField {
+        background-color: white;
+        width: 400px;
+        height: 35px;
+        padding: 0;
+      }
+      #resultsContainer {
+        padding-top: 35px;
+        margin-top: 35px;
+        top: 90px;
+        width: 90%;
+        height: 100%;
+        border: 1px solid lightgrey;
+        background-color: f7f7f7;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <div class="content">
+      <div class="searchFormContainer">
+        <form id="searchForm">
+          <input type="text" id="searchField" name="searchField" placeholder="type in your SPARQL query.."/>
+          <input type="button" id="searchSubmit" name="searchSubmit" value="SPARQL away.."/>
+        </form>
+      </div>
+      <p id="resultsContainer">
+        alsjkf;asd
+      </p>
+    </div>
+    <script>
+      var query = "SELECT ?x WHERE \{ ?x \<http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasName\> \"World Wrestling Entertainment\" \}";
+      var url_to_endpoint = "http://localhost:3030/DatasetPathName/sparql";
+      $('#searchSubmit').on('click', function() {
+        userQuery = $("#searchField").val();
+        var queryUrl = url_to_endpoint + "?query=" + encodeURIComponent(userQuery) + "&format=json";
+        $.ajax({
+          url: queryUrl,
+          data: "",
+          success: function(data) {
+            displayResults(data);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            $("#resultsContainer").html("<b>ERROR 442:</b> Input could not be resolved to a query!")
+          }
+        });
+      });
+
+
+      function displayResults(data) {
+        for(var key in data) {
+          console.log(key);
+        }
+        console.log(data);
+        var str = JSON.stringify(data, null, 2);
+        $("#resultsContainer").html(str);
+      }
+    </script>
+  </body>
+
+</html>
