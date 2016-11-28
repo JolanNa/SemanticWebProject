@@ -42,12 +42,20 @@
         margin-top: 35px;
         top: 90px;
         width: 90%;
-        height: 100%;
+        min-height: 100%;
         border: 1px solid lightgrey;
         background-color: f7f7f7;
         margin-left: auto;
         margin-right: auto;
       }
+      #tableResults {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      #tableResults td {
+        padding: 10px 10px 10px 15px;
+      }
+      tr:nth-child(odd) {background-color: lightgrey;}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -61,7 +69,9 @@
         </form>
       </div>
       <p id="resultsContainer">
-        alsjkf;asd
+        <table id="tableResults" >
+
+        </table>
       </p>
     </div>
     <script>
@@ -84,12 +94,21 @@
 
 
       function displayResults(data) {
-        for(var key in data) {
-          console.log(key);
-        }
+        var html = "";
+        $.each(data["results"]["bindings"], function(i,l) {
+          $.each(l, function(k, v) {
+            if(i%2 == 0) {
+              html += "<tr class=\"unevenRow\">";
+            } else {
+              html += "<tr class=\"evenRow\">";
+            }
+            html += "<td> " + k + "</td><td> " + v["value"] + "</td></tr>";
+          });
+
+        });
         console.log(data);
-        var str = JSON.stringify(data, null, 2);
-        $("#resultsContainer").html(str);
+        $("#tableResults").html(html);
+
       }
     </script>
   </body>
