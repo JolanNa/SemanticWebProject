@@ -75,11 +75,32 @@
       </p>
     </div>
     <script>
-      var query = "SELECT ?x WHERE \{ ?x \<http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasName\> \"World Wrestling Entertainment\" \}";
+      var query = "SELECT ?x WHERE { ?x <http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasName> \"World Wrestling Entertainment\" }";
+      document.write(query)
       var url_to_endpoint = "http://localhost:3030/DatasetPathName/sparql";
       $('#searchSubmit').on('click', function() {
         userQuery = $("#searchField").val();
-        var queryUrl = url_to_endpoint + "?query=" + encodeURIComponent(userQuery) + "&format=json";
+        var base_query = `PREFIX wo: <http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#>
+                          PREFIX rdf: \<http://www.w3.org/2000/01/rdf-schema#\>
+                          SELECT
+                            ?individual (count(?properties) as ?numbr)
+                          WHERE
+                          {
+                            OPTIONAL
+                            {
+                              ?individual rdf:label ?label;
+                              wo:hasName ?name
+                            }
+                            FILTER ( regex(str(?label), \"` + userQuery + `\"\, \"i\") || regex(str(?name), \"` + userQuery+ `\"\, \"i\"))
+                                .
+
+                            ?individual ?properties  ?values.
+                            ?individual rdf:label ?label
+                          }
+                          GROUP BY
+                            ?individual ?numbr
+                          ORDER BY DESC(?numbr)`;
+        var queryUrl = url_to_endpoint + "?query=" + encodeURIComponent(base_query) + "&format=json";
         $.ajax({
           url: queryUrl,
           data: "",
