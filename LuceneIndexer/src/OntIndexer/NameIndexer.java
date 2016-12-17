@@ -151,6 +151,16 @@ public class NameIndexer {
 		{
 			if(titles==0 && promos==0 && matches==0 && properties==0)
 				return "SELECT ?relationship WHERE {?subject1 rdf:label \""+ names.get(0)+"\"@en . ?subject2 rdf:label \""+ names.get(1)+"\"@en. ?subject1 ?relationship ?subject2}";
+			
+			if(matches==1)
+			{
+				return "SELECT ?match ?winner ?loser WHERE{"+  
+"?subject1 wo:hasName \""+names.get(0)+"\"."+
+"?subject2 wo:hasName \""+names.get(1)+"\"."+
+"{?match  wo:hasWinner ?subject1. ?match  wo:hasLoser ?subject2. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser } UNION"+
+"{?match  wo:hasWinner ?subject2. ?match  wo:hasLoser ?subject1. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser}}";
+			}
+			
 			return "";
 		}
 		else //factual search
