@@ -17,7 +17,7 @@ public class LuceneTests {
 "PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>"+
 "PREFIX rdfs: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
 
-"SELECT ?subject WHERE {?x wo:hasName ?subject}";
+"SELECT ?subject WHERE {{?x wo:hasName ?subject} UNION{?x wo:hasAbbreviation ?subject}}";
 
 	  public static void buildNames(NameIndexer ni) {
 
@@ -52,6 +52,7 @@ public class LuceneTests {
 		ni.addMatch("fight");
 		ni.addMatch("fights");
 		ni.addMatch("match");
+		ni.addTeam("team");
 		ni.addProperty("age");
 		ni.addProperty("height");
 		ni.addProperty("weight");
@@ -60,7 +61,6 @@ public class LuceneTests {
 		ni.addProperty("birthday");
 		ni.addProperty("age");
 		ni.addProperty("trainer");
-		ni.addProperty("matches"); // still needs work... connection goes from match to fighter not this way around
 		ni.addProperty("alias");
 		ni.addProperty("weight");
 		ni.addProperty("height");
@@ -73,7 +73,7 @@ public class LuceneTests {
 		ni.addProperty("date");
 		
 		// building our query
-		String query="Adam Cole trainer";
+		String query="Becky Lynch Charlotte matches";
 		String sparql=ni.buildQuery(query);
 		
 		/*PREFIX wo: <http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#>

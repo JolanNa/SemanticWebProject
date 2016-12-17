@@ -24,6 +24,11 @@ public class NameIndexer {
 		Term nuterm= new Term("promotion",n);
 		terms.add(nuterm);
 	}
+	public void addTeam(String n)
+	{
+		Term nuterm= new Term("team",n);
+		terms.add(nuterm);
+	}
 	public void addTitle(String n)
 	{
 		Term nuterm= new Term("title",n);
@@ -128,6 +133,7 @@ public class NameIndexer {
 		int promos=0;
 		int matches=0;
 		int properties=0;
+		int teams=0;
 		String subject = buildSubject(t);
 		//names=getLabelCount("name", subject);
 		names=getNameNumber(q);
@@ -140,6 +146,7 @@ public class NameIndexer {
 			promos+=getLabelCount("promotion", token);
 			matches+=getLabelCount("match", token);
 			properties+=getLabelCount("property", token);
+			teams+=getLabelCount("team", token);
 			System.out.println("Token: " + token);
 		}
 		System.out.println("Number of names: " + names);
@@ -149,7 +156,7 @@ public class NameIndexer {
 		t= new StringTokenizer(q);
 		if(names.size() >=2 ) //relational search
 		{
-			if(titles==0 && promos==0 && matches==0 && properties==0)
+			if(titles==0 && promos==0 && matches==0 && properties==0 && teams==0)
 				return "SELECT ?relationship WHERE {?subject1 rdf:label \""+ names.get(0)+"\"@en . ?subject2 rdf:label \""+ names.get(1)+"\"@en. ?subject1 ?relationship ?subject2}";
 			
 			if(matches==1)
@@ -160,6 +167,16 @@ public class NameIndexer {
 "{?match  wo:hasWinner ?subject1. ?match  wo:hasLoser ?subject2. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser } UNION"+
 "{?match  wo:hasWinner ?subject2. ?match  wo:hasLoser ?subject1. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser}}";
 			}
+			if(teams==1)
+			{
+				return "SELECT ?team ?member1 ?member2 "
+						+ "WHERE{ "
+						+ "?member1 wo:hasName \""+names.get(0)+"\". "
+						+ "?member2 wo:hasName \""+names.get(1)+"\". "
+						+ "?team wo:hasPerson ?member1. "
+						+ "?team wo:hasPerson ?member2 "
+						+ "}";
+			}
 			
 			return "";
 		}
@@ -167,7 +184,7 @@ public class NameIndexer {
 		{
 			if(titles==0 && promos==0 && matches==0 && properties==0)
 			{
-				return "SELECT DISTINCT * WHERE { ?z wo:hasName \""+subject +"\" . ?z ?x ?y}";
+				return "SELECT DISTINCT * WHERE { {?z wo:hasName \""+subject +"\"} UNION {?z wo:hasAbbreviation \""+subject +"\"} . ?z ?x ?y}";
 			}
 			String sparql= "SELECT ?subject ?object WHERE {?subject rdf:label \""+buildSubject(t) +"\"@en";
 			if(properties>=1)
