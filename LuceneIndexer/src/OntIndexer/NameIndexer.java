@@ -136,6 +136,21 @@ public class NameIndexer {
 		return names;
 	}
 	
+	public String reccomendationQuery(String individual)
+	{
+		
+		return "SELECT DISTINCT ?related WHERE {?dude wo:hasName \""+ individual+"\" OPTIONAL{"
+				+ "{?match wo:hasLoser ?related . ?match wo:hasWinner ?dude} "
+				+ "UNION {?match wo:hasWinner ?related . ?match wo:hasLoser ?dude}}"
+				+ "OPTIONAL {?related rdfs:type ?type."
+				+ "?type rdf:subClassOf* wo:Person."
+				+ "?dude ?y ?related}"
+				+ "OPTIONAL {{ ?match wo:hasLoser ?dude} UNION {  ?match wo:hasWinner ?dude}."
+				+ "?card wo:hasMatch ?match."
+				+ "?event wo:hasCard ?card."
+				+ "?related ?z ?event}}";
+	}
+	
 	public String buildQuery(String q)
 	{
 		
