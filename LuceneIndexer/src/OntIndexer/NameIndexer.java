@@ -148,7 +148,8 @@ public class NameIndexer {
 				+ "OPTIONAL {{ ?match wo:hasLoser ?dude} UNION {  ?match wo:hasWinner ?dude}."
 				+ "?card wo:hasMatch ?match."
 				+ "?event wo:hasCard ?card."
-				+ "?related ?z ?event}}";
+				+ "?related ?z ?event}"
+				+ "}";
 	}
 	
 	public String buildQuery(String q)
@@ -243,8 +244,10 @@ public class NameIndexer {
 			
 		}
 	}
+	
 //	public String getTerm()
 //	{
 //		
 //	}
+	
 }

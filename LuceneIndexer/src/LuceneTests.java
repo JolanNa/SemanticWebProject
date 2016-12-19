@@ -73,8 +73,8 @@ public class LuceneTests {
 		ni.addProperty("date");
 		
 		// building our query
-		String query="Alberto Del Rio";
-		String sparql=ni.reccomendationQuery(query);
+		String query="Roman Reigns company";
+		String sparql=ni.buildQuery(query);
 		
 		/*PREFIX wo: <http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#>
 PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
