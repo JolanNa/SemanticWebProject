@@ -73,7 +73,7 @@ public class LuceneTests {
 		ni.addProperty("date");
 		
 		// building our query
-		String query="Becky Lynch Charlotte matches";
+		String query="Cesaro";
 		String sparql=ni.buildQuery(query);
 		
 		/*PREFIX wo: <http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#>

@@ -72,6 +72,8 @@ public class NameIndexer {
 		while(t.hasMoreTokens())
 		{
 			String next= t.nextToken();
+			if(getLabel(next,"name")==true)
+				return next;
 			if(getLabel(next,"promotion")==false && getLabel(next,"title")==false && getLabel(next,"match")==false && getLabel(next,"property")==false)
 			{
 				ret+= next +" ";
@@ -124,6 +126,16 @@ public class NameIndexer {
 		return names;
 	}
 	
+	public Vector<String> nameValidator(Vector<String> names)
+	{
+		for(int i=0; i<names.size(); i++)
+		{
+			if(getLabelCount("name",names.get(i))==0)
+				names.remove(i);
+		}
+		return names;
+	}
+	
 	public String buildQuery(String q)
 	{
 		
@@ -137,6 +149,7 @@ public class NameIndexer {
 		String subject = buildSubject(t);
 		//names=getLabelCount("name", subject);
 		names=getNameNumber(q);
+		names=nameValidator(names);
 		t= new StringTokenizer(q);
 		while(t.hasMoreTokens())
 		{
@@ -162,10 +175,10 @@ public class NameIndexer {
 			if(matches==1)
 			{
 				return "SELECT ?match ?winner ?loser WHERE{"+  
-"?subject1 wo:hasName \""+names.get(0)+"\"."+
-"?subject2 wo:hasName \""+names.get(1)+"\"."+
-"{?match  wo:hasWinner ?subject1. ?match  wo:hasLoser ?subject2. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser } UNION"+
-"{?match  wo:hasWinner ?subject2. ?match  wo:hasLoser ?subject1. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser}}";
+				"?subject1 wo:hasName \""+names.get(0)+"\"."+
+				"?subject2 wo:hasName \""+names.get(1)+"\"."+
+				"{?match  wo:hasWinner ?subject1. ?match  wo:hasLoser ?subject2. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser } UNION"+
+				"{?match  wo:hasWinner ?subject2. ?match  wo:hasLoser ?subject1. ?match wo:hasWinner ?winner. ?match wo:hasLoser ?loser}}";
 			}
 			if(teams==1)
 			{
