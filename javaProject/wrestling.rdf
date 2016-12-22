@@ -21,6 +21,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#aired -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#aired">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#airedOn"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TV_Network"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#airedOn -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#airedOn">
@@ -43,9 +53,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasCard">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Card"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Event"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Card"/>
     </owl:ObjectProperty>
     
 
@@ -54,8 +63,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasCommentator">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isCommentator"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Commentator"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Event"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Commentator"/>
     </owl:ObjectProperty>
     
 
@@ -72,11 +81,10 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasInvolved -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasInvolved">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Commentator"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Wrestler"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isInvolved"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
     </owl:ObjectProperty>
     
 
@@ -85,9 +93,9 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasLoser">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasInvolved"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Wrestler"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Wrestler"/>
     </owl:ObjectProperty>
     
 
@@ -96,8 +104,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasMatch">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Card"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Card"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
     </owl:ObjectProperty>
     
 
@@ -105,8 +113,8 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasOwner -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasOwner">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Owner"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Ownership"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Ownership"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Owner"/>
     </owl:ObjectProperty>
     
 
@@ -114,8 +122,8 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasOwnership -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasOwnership">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Ownership"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Promotion"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Promotion"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Ownership"/>
     </owl:ObjectProperty>
     
 
@@ -123,11 +131,10 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasPerson -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasPerson">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
     </owl:ObjectProperty>
     
 
@@ -141,14 +148,6 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Promotion"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasReferee -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasReferee">
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
     </owl:ObjectProperty>
     
 
@@ -175,8 +174,8 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasTitleReign -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasTitleReign">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign"/>
     </owl:ObjectProperty>
     
 
@@ -195,8 +194,8 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasVacancy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasVacancy">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleVacancy"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleVacancy"/>
     </owl:ObjectProperty>
     
 
@@ -205,8 +204,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasVenue">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Venue"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Venue"/>
     </owl:ObjectProperty>
     
@@ -216,9 +214,9 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasWinner">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasInvolved"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Wrestler"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Wrestler"/>
     </owl:ObjectProperty>
     
 
@@ -236,8 +234,26 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isCommentator -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isCommentator">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Event"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Commentator"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Commentator"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isInvolved -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isInvolved">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isLoser -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isLoser">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isInvolved"/>
     </owl:ObjectProperty>
     
 
@@ -248,6 +264,15 @@
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isRelated"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isOwner -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isOwner">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Owner"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Ownership"/>
     </owl:ObjectProperty>
     
 
@@ -272,17 +297,35 @@
     
 
 
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isTitleTermOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isTitleTermOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isTrainer -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isTrainer"/>
     
 
 
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isWinner -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isWinner">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isInvolved"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#wonTitleReign -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#wonTitleReign">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TitleReign"/>
     </owl:ObjectProperty>
     
 
@@ -374,7 +417,6 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasAttendance -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasAttendance">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Event"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </owl:DatatypeProperty>
@@ -420,7 +462,6 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasDate -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasDate">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Event"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
     </owl:DatatypeProperty>
@@ -431,7 +472,7 @@
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasDuration">
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Match"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
     </owl:DatatypeProperty>
     
 
@@ -467,8 +508,8 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasLocation -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasLocation">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Event"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Promotion"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TV_Network"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Venue"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -479,15 +520,7 @@
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasName -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#hasName">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Owner"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Person"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Promoter"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Promotion"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#TV_Network"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Team"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Title"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Venue"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Wrestler"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -557,10 +590,19 @@
     
 
 
+    <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#imageLink -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#imageLink">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isPPV -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#isPPV">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Event"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/vasco/ontologies/2016/9/untitled-ontology-5#Show"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
     </owl:DatatypeProperty>
     
