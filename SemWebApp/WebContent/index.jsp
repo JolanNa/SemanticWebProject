@@ -124,7 +124,7 @@
 
       <div class="searchFormContainer">
         <form action="Search" id="searchForm" method="post">
-          <input type="text" id="searchField" name="searchField" placeholder="type in your SPARQL query.."/>
+          <input type="text" id="searchField" name="searchField" placeholder="What do you want to know?"/>
           <input type="submit" id="searchSubmit" name="searchSubmit" value="Go!"/>
         </form>
       </div>

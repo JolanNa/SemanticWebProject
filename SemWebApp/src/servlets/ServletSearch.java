@@ -75,8 +75,8 @@ public class ServletSearch extends HttpServlet {
 			{
 				QuerySolution sol = results.nextSolution() ;
 		        
-				resultHtml += "<a class=\"resulLink\" href=\"Details?uri="+ sol.get("individual").toString().replaceAll("#", "HASHTAG") +"\">"
-						+ "<li>" + sol.get("label") + "</li></a>";
+				resultHtml += "<a class=\"resulLink\" href=\"Details?uri="+ getValueFromKey("individual", sol).toString().replaceAll("#", "HASHTAG") +"\">"
+						+ "<li>" + getValueFromKey("label", sol) + "</li></a>";
 					
 				
 		    }
@@ -88,13 +88,16 @@ public class ServletSearch extends HttpServlet {
 			for ( ; results.hasNext() ; )
 			{
 				QuerySolution sol = results.nextSolution() ;
-		        
+		        System.out.println("\n Query Result Answer Class ---> "+queryResult.getAnswerClass());
 		        switch (queryResult.getAnswerClass()) {
 				case "Person":
 					resultHtml += personToHtml(sol, queryResult.getLastLetter());
 					break;
+				case "TitleReign":
+					resultHtml += titleToHtml(sol, queryResult.getLastLetter());
+					break;
 				default:
-					resultHtml += "<li>" + sol.get(queryResult.getLastLetter()) + "</li>";
+					resultHtml += factToHtml(sol, queryResult.getLastLetter());
 					break;
 				}
 		    }
@@ -172,6 +175,40 @@ public class ServletSearch extends HttpServlet {
 		
 		return html;
 	}
+	private String titleToHtml(QuerySolution r, String lastLetter) {
+String html = "";
+		
+//		for(Iterator iterator = r.keySet().iterator(); iterator.hasNext();) {
+//	  	    String key = (String) iterator.next();
+//	  	    JSONObject result = (JSONObject) r.get(key);
+//	  	    String type = (String) result.get("type");
+	  	    
+	  	    // let's get all the values we want to display
+			System.out.println(lastLetter);
+			System.out.println(r.toString());
+	  	    
+	  	    html += "  	  <a class=\"resulLink\" href=\"Details?uri="+ getValueFromKey(lastLetter, r).replaceAll("#", "HASHTAG") +"\"><li class=\"liResult\"> ";
+		  	html += "		<div class=\"resultImageContainer\"> ";
+		  	html += "			<img src=\""+ getValueFromKey("imageLink", r)+ "\"  onerror=\"this.onerror=null;this.src='https://secure.gravatar.com/avatar/f22077456dc75ae4115888151c4a02a7?s=80&d=identicon';\" /> "; //+ "\" onerror=\"this.onerror=null;this.src='notFound.gif';\"
+		  	html += "		</div> ";
+		  	html += "		<div class=\"resultTextContainer\"> ";
+		  	html += "			<div class=\"resultHeading\">" + getValueFromKey("hasName", r)  + "</div><div class=\"resultInactive\"></div> ";
+			html += "   <div class=\"resultInfoText\">From :" + getValueFromKey("hasStartingDate", r)  + "</div> ";
+			html += "  <div class=\"resultInfoText\">To :" + getValueFromKey("hasEndDate", r)  + "</div> ";
+			html += "		</div> ";
+			html += "		<div class=\"end-float\"> </div> ";
+			html += "	</li></a>";
+	  	      	
+//		}
+		
+		return html;
+	}
+	
+	private String factToHtml(QuerySolution r, String lastLetter) {
+		return "<li>" + getValueFromKey(lastLetter, r).split("\\^\\^")[0] + "</li>";
+	}
+	
+	
 	
 	private String getValueFromKey(String key, QuerySolution solution) {
 		try {

@@ -65,6 +65,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
     private static OntModel m = ModelFactory.createOntologyModel();
     private static OntDocumentManager dm = m.getDocumentManager();
     private static int entityExtracted;
+    private static ProgressSaver ps;
 
 
     private static final ArrayList<String> FULL_LINKS_PROMOTIONS = new ArrayList<String>() {{
@@ -185,8 +186,10 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 
 	public static void main(String[] args) {
 		// get a ProgressSaver object with the current progress
-        ProgressSaver ps = getProgressSaver();
+        ps = getProgressSaver();
 
+        System.out.println(ps.toString());
+        
 		dm.addAltEntry( "http://www.semanticweb.org/vasco/ontologies/2016/9/wrestling",
                 "file:" + ontfile );
 		m.read("http://www.semanticweb.org/vasco/ontologies/2016/9/wrestling");
@@ -207,7 +210,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 //			System.out.println(matche.group(0));
 //		}
 
-		System.out.println("Kintaro Oki & Michiaki Yoshimura (3)".replaceAll("\\([0-9]+\\)", ""));
+//		System.out.println("Kintaro Oki & Michiaki Yoshimura (3)".replaceAll("\\([0-9]+\\)", ""));
 //
 //
 //
@@ -222,32 +225,40 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 			// Data has to be crawled. But if there already is some, start there!
 			//first extract the links, where to crawl
 			System.out.println("--- '" + specs.get("name") + " ---");
-			List<String> links;
+			List<String> links = new ArrayList<String>();
 			//loop over the years for events..
 			if(specs.get("name") == "Promotion") {
 				links = FULL_LINKS_PROMOTIONS;
 			} else if(specs.get("name") == "Event") {
-				links = getLinksFromMultiSiteTable((String) specs.get("raw_link"),
-						(String) specs.get("appendix"),
-                        ps.getProgress((String) specs.get("name")),
-						(Integer) specs.get("step_size"),
-						(Integer) specs.get("nr_elements"),
-						(Integer) specs.get("columnPromotion"),
-						(Integer) specs.get("column_link"));
-				for(int year = 2016; year >= 2016; year--) {
+				if(ps.getEventYearProgress() == 16) {
+					links = getLinksFromMultiSiteTable((String) specs.get("raw_link"),
+							(String) specs.get("appendix"),
+	                        ps.getProgress((String) specs.get("name")),
+	                        (String) specs.get("name"),
+							(Integer) specs.get("step_size"),
+							(Integer) specs.get("nr_elements"),
+							(Integer) specs.get("columnPromotion"),
+							(Integer) specs.get("column_link"));
+					ps.setEventProgress(0);
+				}
+				for(int year = ps.getEventYearProgress(); year >= 2016; year--) {
 					System.out.println("Year : " + year);
 					links.addAll(getLinksFromMultiSiteTable(specs.get("raw_link") +"&Year=" + Integer.toString(year),
 						(String) specs.get("appendix"),
                             ps.getProgress((String) specs.get("name")),
+                            (String) specs.get("name"),
 						(Integer) specs.get("step_size"),
 						(Integer) specs.get("nr_elements"),
 						(Integer) specs.get("columnPromotion"),
 						(Integer) specs.get("column_link")));
+					ps.setEventYearProgress(year);
+					ps.setEventProgress(0);
 				}
 			} else {
 				links = getLinksFromMultiSiteTable((String) specs.get("raw_link"),
 						(String) specs.get("appendix"),
                         ps.getProgress((String) specs.get("name")),
+                        (String) specs.get("name"),
 						(Integer) specs.get("step_size"),
 						(Integer) specs.get("nr_elements"),
 						(Integer) specs.get("columnPromotion"),
@@ -277,7 +288,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 			}
 			int j = 0;
 			for(String link : links) {
-				if(j%100 == 0) {
+				if(j%1000 == 0) {
 					System.out.print("Data Extraction: " + ((float )j)/ links.size() + "%   \r");
 				}
 				j++;
@@ -313,11 +324,13 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 	 * @param stepSize : the step size of the table
 	 * @return a list with links to all the elements of the table (e.g. Workers, Promotions etc.)
 	 */
-	public static List<String> getLinksFromMultiSiteTable(String link, String appendix,int start, int stepSize, int numberOfElements, int columnPromotion, int columnLink) {
+	public static List<String> getLinksFromMultiSiteTable(String link, String appendix,int start, String name, int stepSize, int numberOfElements, int columnPromotion, int columnLink) {
 		List<String> links = new ArrayList<String>();
 		Document document = null;
 		//after the first batch a appendix + step size is needed to connect to the link
-		for(int i=start;i <= numberOfElements; i += stepSize) {
+		int i = start;
+		for(i=start;i <= numberOfElements; i += stepSize) {
+			System.out.println("start: " + start + "   nOfE: " +numberOfElements);
 			System.out.print("Link Extraction : " + ((float )i)/numberOfElements + "% \r");
 			try {
 				document = Jsoup.connect(link+appendix+Integer.toString(i)).timeout(20 * 1000).get();
@@ -351,6 +364,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 				}
 			}
 		}
+		saveProgressSaver(name, i);
 		return links;
 	}
 
@@ -416,10 +430,10 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 							promo.addProperty(m.getProperty(NS + "#hasStatus"),value);
 							break;
 						case "location":
-							promo.addProperty(m.getProperty(NS + "#hasLocation"),value);
+							promo.addProperty(m.getProperty(NS + "#hasHeadquarter"),value);
 							break;
 						case "active_time":
-							promo.addProperty(m.getProperty(NS + "#hasActiveTime"),value);
+//							promo.addProperty(m.getProperty(NS + "#hasActiveTime"),value);
 							break;
 						case "owners":
 							String[] ownersRaw = value.split("\\)");
@@ -491,7 +505,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 							break;
 						case "promotion":
 							if(m.getIndividual(create_uri(value, links_for_id)) != null) {
-								event.addProperty(m.getProperty(NS + "#hasPromotion"), m.getIndividual(create_uri(value, links_for_id)));
+								event.addProperty(m.getProperty(NS + "#hasShowPromoter"), m.getIndividual(create_uri(value, links_for_id)));
 							}
 							break;
 						case "type":
@@ -817,7 +831,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 				team = null;
 				Individual teamMember = null;
 				Individual reign = makeIndividual(name + " - " + counter, "", "TitleTerm");
-				reign.addProperty(m.getProperty(NS + "#isTitleTermOf"), title);
+//				reign.addProperty(m.getProperty(NS + "#isTitleTermOf"), title);
 				//get the dates:
 				Pattern pattern = Pattern.compile("\\d{2}\\.\\d{2}\\.\\d{4}");
 				java.util.regex.Matcher matche = pattern.matcher(row.text());
@@ -867,7 +881,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 							teamMember.addProperty(m.getProperty(NS + "#wonTitleReign"), reign);
 						}
 						if (team != null)
-							team.addProperty(m.getProperty(NS + "#hasPerson"), teamMember);
+							team.addProperty(m.getProperty(NS + "#hasMember"), teamMember);
 					}
 					if(team!=null) {
 						team.addProperty(m.getProperty(NS + "#wonTitleReign"), reign);
@@ -891,14 +905,14 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 //					System.out.println(links_for_id.toString());
 					if(m.getIndividual(create_uri(dude, links_for_id))!=null)
 					{
-						team.addProperty(m.getProperty(NS+"#hasPerson"), m.getIndividual(create_uri(dude, links_for_id)));
+						team.addProperty(m.getProperty(NS+"#hasMember"), m.getIndividual(create_uri(dude, links_for_id)));
 					}
 					else
 					{
 //						Individual noob= m.createIndividual(create_uri(dude, links_for_id), m.getOntClass(NS +"#Wrestler"));
 						Individual noob= makeIndividual(dude, links_for_id, "Wrestler");
 						noob.addProperty(m.getProperty(NS + "#hasName"), dude);
-						team.addProperty(m.getProperty(NS+"#hasPerson"),noob );
+						team.addProperty(m.getProperty(NS+"#hasMember"),noob );
 					}
 				}
 			}
@@ -1062,7 +1076,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 			String wrestlerName = w.select("a[href]").text();
 			Individual wrestler = m.getIndividual(create_uri(wrestlerName, wrestlerLink));
 			if(wrestler != null) {
-				stable.addProperty(m.getProperty(NS + "#hasPerson"), wrestler);
+				stable.addProperty(m.getProperty(NS + "#hasMember"), wrestler);
 			}
 		}
 		for(Element row : rows) {
@@ -1124,7 +1138,7 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 
 	private static void saveOntology() {
         OutputStream out = null;
-        String savePath = "testen.ttl";
+        String savePath = "WrestlingOntology.ttl";
         try {
             out = new FileOutputStream(savePath);
             m.write( out, "Turtle" );
@@ -1259,14 +1273,15 @@ public class WrestlingScraper {								/*WATCH OUT FOR  VVV */
 
     }
 
-    private static void saveProgressSaver(ProgressSaver ps) {
+    private static void saveProgressSaver(String name, int progress) {
+    	ps.setProgress(name, progress);
         try {
             FileOutputStream fileOut = new FileOutputStream("savedProgress.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(ps);
             out.close();
             fileOut.close();
-            System.out.printf("Serialized data is saved in /tmp/employee.ser");
+            System.out.printf("Serialized data is saved in /tmp/employee.ser\n");
         }catch(IOException i) {
             i.printStackTrace();
         }

@@ -1,7 +1,9 @@
 package QueryConverter;
 
 
-/// query return object
+/// TODO: error when fuseki is not yet started!!
+// TODO: When one subject is in the query and one random word, the name is the name + the random word in the query!!!
+// TODO: Also non names are found: e.g. Abys is detected as a name
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -50,23 +52,28 @@ public class QueryConverter {
     NameIndexer ni;
 	
 	private static final HashMap<String, String> PROPERTIES = new HashMap<String, String>() {{
-		put("titles", "wonTitleReign");
-		put("title", "wonTitleReign");
-		put("name", "hasName");
-		put("birthday", "hasBirthdate");
-		put("age", "hasAge");
-		put("trainer", "hasTrainer");
-		put("matches", "wonMatch"); // still needs work... connection goes from match to fighter not this way around
-		put("alias", "isAlterEgo");
-		put("weight", "hasWeight");
-		put("height", "hasHeight'");
-		put("owner", "hasOwnership");
+		//for everything
+		put("name", "hasName");put("names", "hasName");put("named", "hasName");
+		put("match", "isInvolved");put("matches", "isInvolved"); // still needs work... connection goes from match to fighter not this way around
+		// For Persons
+		put("titles", "wonTitleReign"); put("title", "wonTitleReign"); put("championship", "wonTitleReign"); put("championships", "wonTitleReign");
+//		put("birthday", "hasBirthdate"); // does not work yet put("day of birth", "hasBirthdate");
+		put("age", "hasAge"); put("aged", "hasAge"); 
+		put("trainer", "hasTrainer");put("coach", "hasTrainer");
+		put("trainee", "isTrainer");put("student", "isTrainer");
+		put("alias", "isAlterEgo"); put("alterego", "alter ego"); put("aka", "isAlterEgo");
+		put("weight", "hasWeight"); put("kilos", "hasWeight"); put("kg", "hasWeight");
+		put("height", "hasHeight"); put("cm", "hasHeight"); put("centimeters", "hasHeight");
 		put("owns", "isOwner");
-		put("holder", "hasTitleReign");
-		put("trademark", "hasTrademarkHold");
+		put("trademark", "hasTrademarkHold");put("trademarks", "hasTrademarkHold");
 		put("sytle", "hasStyle");
-		put("events", "hasEvent");
-		put("date", "hasDate");
+		put("gender", "hasGender");put("sex", "hasGender");
+		put("date", "hasDate");put("dates", "hasDate");
+		//for promotions
+		put("owner", "hasOwnership");
+		put("events", "hasEvent");put("event", "hasEvent");
+		//for titles 
+		put("holder", "hasTitleReign");
 		
 	}};
 	
@@ -177,6 +184,7 @@ public class QueryConverter {
 			}
 			theProperties.add(property);
 		}
+//		System.out.println(classProperties.get("Thing"));
 		classProperties.get("Wrestler").addAll(classProperties.get("Thing"));
 		classProperties.get("Person").addAll(classProperties.get("Thing"));
 //		System.out.println(classProperties.toString());
@@ -304,7 +312,7 @@ public class QueryConverter {
 			    foundProperties.add(value);
 			} 
 		}
-//		System.out.println(foundProperties.size());
+		System.out.println("Found properties: "  + foundProperties.size() + "    -> " + foundProperties.toString());
 		
 		
 //		dm.addAltEntry( "http://www.semanticweb.org/vasco/ontologies/2016/9/wrestling",
@@ -381,6 +389,7 @@ public class QueryConverter {
                           + "GROUP BY\n"
                           + "  ?individual ?numbr ?label\n"
                           + "ORDER BY DESC(?numbr)";
+				System.out.println(entityQuery);
 				queryResult.addToSparql(entityQuery);
 //				System.out.println(entityQuery);
 				//make a entity search
@@ -619,6 +628,8 @@ public class QueryConverter {
 //	        System.out.println(l.toString().trim());
 	        ni.addName(l.toString().trim());
 	      }
+	    } catch (Exception e) {
+	    	//TODO
 	    }
 	}
 	

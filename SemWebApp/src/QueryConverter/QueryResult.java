@@ -17,6 +17,7 @@ public class QueryResult {
 		this.dummy = 0;
 		this.sparqlQuery = "";
 		this.answerClass = "";
+		this.searchType = "error";
 		this.currentLetter = 23;
 		this.skipLetters = 0;
 		this.lastLetter = "x";

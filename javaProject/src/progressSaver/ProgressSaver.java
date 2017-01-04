@@ -10,6 +10,7 @@ public class ProgressSaver implements java.io.Serializable {
     private int progressTagTeams;
     private int progressWorkers;
     private int progressTitles;
+    private int progessSaverEventYear;
 
     public ProgressSaver() {
         this.progressPromotions = 0;
@@ -17,6 +18,8 @@ public class ProgressSaver implements java.io.Serializable {
         this.progressStables = 0;
         this.progressTagTeams = 0;
         this.progressWorkers = 0;
+        this.progressTitles = 0;
+        this.progessSaverEventYear = 2016;
     }
 
     public int getProgress(String name) {
@@ -33,6 +36,36 @@ public class ProgressSaver implements java.io.Serializable {
                 return progressTitles;
         }
         return 0;
+    }
+    public int getEventYearProgress() {
+    	return progessSaverEventYear;
+    }
+    public void setEventYearProgress(int year) {
+    	progessSaverEventYear = year;
+    }
+    
+    public void setEventProgress(int p) {
+    	progressEvents = p;
+    }
+    
+    public void setProgress(String name, int progress) {
+        switch(name) {
+            case "Promotion":
+                progressPromotions = progress;
+                break;
+            case "Event":
+                progressEvents = progress;
+                break;
+            case "Stable":
+                progressStables = progress;
+                break;
+            case "TagTeam":
+                progressTagTeams = progress;
+                break;
+            case "Title":
+                progressTitles = progress;
+                break;
+        }
     }
 
     public int getProgressPromotions() {
@@ -53,5 +86,18 @@ public class ProgressSaver implements java.io.Serializable {
 
     public int getProgressWorkers() {
         return progressWorkers;
+    }
+    public int getProgressTitles() {
+        return progressTitles;
+    }
+    
+    public String toString() {
+    	return "\n-- Progress Saver --\n"
+    			+ "\nPromotions: " + progressPromotions
+    			+ "\nEvents:     " + progressEvents
+    			+ "\nStables:    " + progressStables
+    			+ "\nTagTeams:   " + progressTagTeams
+    			+ "\nTitles:   " + progressTitles
+    			+ "\nWorkers:    " + progressWorkers;
     }
 }
